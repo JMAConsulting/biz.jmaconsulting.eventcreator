@@ -170,7 +170,7 @@ function eventcreator_civicrm_post($op, $objectName, $objectId, &$objectRef) {
   if ($objectName == 'Event' && $op == 'create') {
     civicrm_api3('CustomValue', 'create', [
       'entity_id' => $objectId,
-      'custom_' . CREATED_ID => $objectRef->created_id,
+      'custom_' . CREATED_ID => CRM_Core_Session::singleton()->get('userID'),
     ]);
   }
 }
