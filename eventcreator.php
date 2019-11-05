@@ -1,5 +1,6 @@
 <?php
-  define('CREATED_ID', 820);
+  define('CREATED_ID', 830);
+  define('EDITED_ID', 831)
 
 require_once 'eventcreator.civix.php';
 use CRM_Eventcreator_ExtensionUtil as E;
@@ -154,6 +155,7 @@ function eventcreator_civicrm_pre($op, $objectName, $id, &$params) {
         if (empty($isActive)) {
           $eventTitle = CRM_Core_DAO::singleValueQuery("SELECT title FROM civicrm_event WHERE id = %1", [1 => [$id, "Integer"]]);
           civicrm_api3('Activity', 'create', [
+            'source_record_id' => $id,
             'source_contact_id' => "user_contact_id",
             'activity_type_id' => "Event Marked Active",
             'subject' => "Event $eventTitle ($id) Marked Active",
@@ -171,6 +173,12 @@ function eventcreator_civicrm_post($op, $objectName, $objectId, &$objectRef) {
     civicrm_api3('CustomValue', 'create', [
       'entity_id' => $objectId,
       'custom_' . CREATED_ID => CRM_Core_Session::singleton()->get('userID'),
+    ]);
+  }
+  if ($objectName == 'Event' && $op == 'edit') {
+    civicrm_api3('CustomValue', 'create', [
+      'entity_id' => $objectId,
+      'custom_' . EDITED_ID => CRM_Core_Session::singleton()->get('userID'),
     ]);
   }
 }
