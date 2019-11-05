@@ -1,6 +1,6 @@
 <?php
   define('CREATED_ID', 830);
-  define('EDITED_ID', 831)
+  define('EDITED_ID', 831);
 
 require_once 'eventcreator.civix.php';
 use CRM_Eventcreator_ExtensionUtil as E;
