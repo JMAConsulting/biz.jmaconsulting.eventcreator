@@ -172,13 +172,13 @@ function eventcreator_civicrm_post($op, $objectName, $objectId, &$objectRef) {
   if ($objectName == 'Event' && $op == 'create') {
     civicrm_api3('CustomValue', 'create', [
       'entity_id' => $objectId,
-      'custom_' . CREATED_ID => CRM_Core_Session::singleton()->get('userID'),
+      'custom_' . CREATED_ID => CRM_Core_Session::singleton()->getLoggedInContactID(),
     ]);
   }
   if ($objectName == 'Event' && $op == 'edit') {
     civicrm_api3('CustomValue', 'create', [
       'entity_id' => $objectId,
-      'custom_' . EDITED_ID => CRM_Core_Session::singleton()->get('userID'),
+      'custom_' . EDITED_ID => CRM_Core_Session::singleton()->getLoggedInContactID(),
     ]);
   }
 }
